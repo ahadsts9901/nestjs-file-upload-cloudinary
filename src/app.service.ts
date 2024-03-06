@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { FirebaseService } from './firebase.service';
+import { CloudinaryService } from './cloudinary.service';
 
 @Injectable()
 export class AppService {
 
-  constructor(private readonly firebaseService: FirebaseService) { }
+  constructor(private readonly cloudinaryService: CloudinaryService) { }
 
   getHello(): string {
     return 'Hello World!';
@@ -12,10 +12,9 @@ export class AppService {
 
   async file(file: any, body: any) {
 
-    const url = await this.firebaseService.uploadImage(file)
-
+    const res: any = await this.cloudinaryService.uploadImage(file.path)
     return {
-      "uploaded image": url,
+      "uploaded image": res.url,
       "body": body
     }
 
